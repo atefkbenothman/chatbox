@@ -19,6 +19,7 @@ type AIChatContextType = {
   context: string
   setContext: (context: string) => void
   handleSend: () => void
+  handleNewChat: () => void
 }
 
 const AIChatContext = createContext<AIChatContextType | undefined>(undefined)
@@ -30,27 +31,43 @@ type AIChatProviderProps = {
 export function AIChatProvider({ children }: AIChatProviderProps) {
   const [context, setContext] = useState<string>("")
 
-  const { messages, input, handleInputChange, append, status, error } = useChat(
-    {
-      api: "/api/chat",
-      initialMessages: [
-        { id: "1", role: "assistant", content: "How can I help you today?" },
-      ],
-    },
-  )
+  const {
+    messages,
+    setMessages,
+    input,
+    handleInputChange,
+    append,
+    status,
+    error,
+  } = useChat({
+    api: "/api/chat",
+    initialMessages: [
+      { id: "1", role: "assistant", content: "How can I help you today?" },
+    ],
+  })
 
   const handleSend = () => {
     if (status === "ready" && input.trim()) {
+      const fullInput = context ? `${context}\n\n${input}` : input
       const message: Message = {
         id: Math.random().toString(),
         role: "user" as const,
-        content: context ? `${context}\n\n${input}` : input,
+        content: fullInput,
       }
       append(message)
       handleInputChange({
         target: { value: "" },
       } as React.ChangeEvent<HTMLInputElement>)
     }
+  }
+
+  const handleNewChat = () => {
+    setMessages([
+      { id: "1", role: "assistant", content: "How can I help you today?" },
+    ])
+    handleInputChange({
+      target: { value: "" },
+    } as React.ChangeEvent<HTMLInputElement>)
   }
 
   const value = {
@@ -62,6 +79,7 @@ export function AIChatProvider({ children }: AIChatProviderProps) {
     context,
     setContext,
     handleSend,
+    handleNewChat,
   }
 
   return (

@@ -4,5 +4,7 @@ type AIChatFooterProps = {
 }
 
 export function AIChatFooter({ children, className }: AIChatFooterProps) {
-  return <div className={`bg-orange-400 ${className || ""}`}>{children}</div>
+  return (
+    <div className={`flex bg-orange-400 ${className || ""}`}>{children}</div>
+  )
 }

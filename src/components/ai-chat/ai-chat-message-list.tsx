@@ -16,7 +16,7 @@ export function AIChatMessageList({
   const { messages } = useAIChat()
 
   return (
-    <div className={`${className || ""}`}>
+    <div className={`flex-1 overflow-y-auto ${className || ""}`}>
       {messages.map((msg) => (
         <AIChatMessage
           key={msg.id}

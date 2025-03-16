@@ -8,6 +8,7 @@ import { AIChatInput } from "@/components/ai-chat/ai-chat-input"
 import { AIChatMessageList } from "@/components/ai-chat/ai-chat-message-list"
 import { AIChatSendButton } from "@/components/ai-chat/ai-chat-send-button"
 import { useAIChat } from "@/components/ai-chat/ai-chat-provider"
+import { AIChatNewButton } from "@/components/ai-chat/ai-chat-new-button"
 
 export function ChatBoxLeft() {
   const { status, handleSend } = useAIChat()
@@ -16,17 +17,17 @@ export function ChatBoxLeft() {
     <AIChat>
       <AIChatHeader className="flex items-center justify-center">
         AI Chat Left
+        <AIChatNewButton />
       </AIChatHeader>
       <AIChatError />
       <AIChatMessageList />
-      <div className="flex flex-row">
+      <AIChatFooter className="bg-yellow-500">
         <AIChatInput placeholder="Ask me anything..." />
         <AIChatSendButton
           onClick={handleSend}
           disabled={status === "streaming" || status === "error"}
         />
-      </div>
-      <AIChatFooter>AI Footer Left</AIChatFooter>
+      </AIChatFooter>
     </AIChat>
   )
 }
