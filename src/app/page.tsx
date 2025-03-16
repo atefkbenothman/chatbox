@@ -1,7 +1,13 @@
-export default function Home() {
+"use server"
+
+import { ChatBoxLeft } from "@/app/chat-box-left"
+import { ChatBoxRight } from "@/app/chat-box-right"
+
+export default async function Home() {
   return (
-    <div>
-      <p>Home</p>
+    <div className="grid h-screen grid-cols-2 gap-x-8">
+      <ChatBoxLeft />
+      <ChatBoxRight />
     </div>
   )
 }
